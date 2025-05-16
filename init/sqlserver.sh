@@ -18,17 +18,17 @@ grep /dev/sdb1 /etc/fstab  ||  echo "/dev/sdb1 /var/lib/mysql          ext4    d
 
 df | grep /dev/sdb1 || mount /dev/sdb1 
 
-yum install -y https://dev.mysql.com/get/mysql84-community-release-el9-1.noarch.rpm
+yum install -y epel-release
+# yum install -y https://dev.mysql.com/get/mysql84-community-release-el9-1.noarch.rpm
 
 if df | grep /dev/sdb1; then
     yum install -y mysql-server
-    grep mysql_native_password /etc/my.cnf || echo 'mysql_native_password=ON' >> /etc/my.cnf
+    #grep mysql_native_password /etc/my.cnf || echo 'mysql_native_password=ON' >> /etc/my.cnf
     systemctl enable mysqld
     systemctl start mysqld
 
 fi
 
-yum install -y epel-release
 yum install -y phpmyadmin joe
 
 sed -i 's|Alias /phpMyAdmin|#Alias /phpMyAdmin|' /etc/httpd/conf.d/phpMyAdmin.conf 
